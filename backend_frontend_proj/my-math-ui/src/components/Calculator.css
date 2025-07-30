@@ -1,0 +1,212 @@
+/* Bigger logo for the calculator */
+.calc-logo {
+  height: 25px;
+  width: auto;
+  max-width: 100%;
+  display: inline-block;
+}
+/* Make the logo bigger if it's inside the title */
+.calc-title img {
+  height: 80px;
+  width: auto;
+  max-width: 100%;
+  display: inline-block;
+}
+/* src/components/Calculator.css */
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #192B37, #FF5640);
+  background-attachment: fixed;
+}
+/* Root layout */
+/* This is the outer div that wraps both the title and the grid */
+.calc-root {
+  /* push the whole block down by 2rem: */
+  /*margin-top: 2rem;
+
+  /* you can also use margin-bottom to pull it up if you prefer:
+     margin-bottom: 2rem;
+  */
+  margin-bottom: 2rem;
+  padding: 1rem 2rem;
+}
+.calc-title {
+  text-align: center;
+  color: white;
+  font-size: 4rem;
+  margin-bottom: 1rem;       /* bring cards up closer */
+}
+
+/* Grid for 3 equal columns */
+.cards-container {
+  display: grid;
+  /* auto-fit with min width ensures flexible columns */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;              /* consistent space between cards */
+  margin: 2rem auto;      /* vertical space and horizontal centering */
+  max-width: 1200px;      /* cap container width */
+  padding: 1rem 0;        /* top/bottom padding */
+}
+
+/* Flip-card size */
+.flip-card {
+  width: 100%;
+  height: 300px;            /* fixed height for uniform cards */
+  perspective: 1000px;
+  cursor: pointer;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Subtle dark‑edge gradient on every card */
+.flip-card-front,
+.flip-card-back {
+  /* existing background gradient… */
+  background-clip: padding-box;
+  position: relative;
+  overflow: hidden;  
+}
+
+.flip-card-front::after,
+.flip-card-back::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;       /* don’t block clicks */
+  background: radial-gradient(
+    circle at center,
+    rgba(0,0,0,0) 50%,
+    rgba(0,0,0,0.2) 100%
+  );
+}
+
+
+.flip-card-front span,
+.back-title {
+  color: #ffffff !important;
+}
+/* Power card: force titles & results to white */
+.cards-container .flip-card:nth-child(1) .flip-card-front span,
+.cards-container .flip-card:nth-child(1) .flip-card-back .back-title,
+.cards-container .flip-card:nth-child(1) .flip-card-back p {
+  color: #ffffff !important;
+}
+
+.cards-container .flip-card:nth-child(2) .flip-card-front span,
+.cards-container .flip-card:nth-child(2) .flip-card-back .back-title,
+.cards-container .flip-card:nth-child(2) .flip-card-back p {
+  color: #ffffff !important;
+}
+
+.cards-container .flip-card:nth-child(3) .flip-card-front span,
+.cards-container .flip-card:nth-child(3) .flip-card-back .back-title,
+.cards-container .flip-card:nth-child(3) .flip-card-back p {
+  color: #ffffff !important;
+}
+/* Shared face styles */
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;       /* clip any overflow */
+}
+
+/* Front face */
+/* Front face with Endava brand gradient */
+.flip-card-front {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+color: #111;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Back face */
+.back-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.flip-card-back {
+  transform: rotateY(180deg); padding: 1rem;
+  box-sizing: border-box;
+  /* center the form vertically if you like: */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.flip-card-back form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;  /* vertically center form */
+}
+.flip-card-back input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+}
+.flip-card-back button {
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.25rem;
+  background: #FF5640;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.flip-card-back button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.flip-card-back .error {
+  color: #e53e3e;
+  margin-top: 0.5rem;
+}
+
+/* Hide number input arrows */
+.flip-card-back input[type="number"]::-webkit-outer-spin-button,
+.flip-card-back input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.flip-card-back input[type="number"] {
+  -moz-appearance: textfield;
+}
+/*
+/* Power card (lighter navy → slate-blue) */
+.cards-container .flip-card:nth-child(1) .flip-card-front,
+.cards-container .flip-card:nth-child(1) .flip-card-back {
+  background: linear-gradient(135deg, #192B37 -30%, #FF5640 150%);
+}
+
+/* Fibonacci card (lighter slate-blue → warm red) */
+.cards-container .flip-card:nth-child(2) .flip-card-front,
+.cards-container .flip-card:nth-child(2) .flip-card-back {
+  background: linear-gradient(135deg, #FF5640 -150%, #192B37 300%);
+}
+
+/* Factorial card (lighter warm red → pale orange) */
+.cards-container .flip-card:nth-child(3) .flip-card-front,
+.cards-container .flip-card:nth-child(3) .flip-card-back {
+  background: linear-gradient(135deg,  #192B37 -50%, #FF5640 90%);
+}

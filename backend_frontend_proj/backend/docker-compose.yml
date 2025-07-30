@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - kafka
+  redis:
+    image: redis:alpine
+  kafka:
+    image: bitnami/kafka:latest
+    environment:
+      - KAFKA_BROKER_ID=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+  zookeeper:
+    image: bitnami/zookeeper:latest
