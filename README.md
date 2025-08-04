@@ -1,69 +1,63 @@
 # Calculator Microservice & React UI
 
-A full‑stack calculator application demonstrating a clean microservice architecture with a modern React front‑end.
-
-**Features:**
-
-* **FastAPI** backend with three mathematical endpoints:
-
-  * `POST /pow` computes $x^y$
-  * `POST /fibonacci/{n}` computes the nᵗʰ Fibonacci number
-  * `POST /factorial/{n}` computes $n!$
-* **SQLite** for persisting all API requests
-* **Pydantic** schemas for strict input validation
-* **API‑key** authentication and **CORS** configured for secure front‑end communication
-* **React + Vite + TypeScript** front‑end with interactive flip‑card UI
-* Linted with **flake8** (Python) and formatted with **Prettier** (JS) for consistent code style
+A combined FastAPI microservice and React + Vite + TypeScript front‑end that provides a simple calculator with power, Fibonacci, and factorial endpoints. Built for clarity, extensibility, and a polished developer experience.
 
 ---
 
-## Table of Contents
+## 📺 Demo
 
-1. [Architecture Overview](#architecture-overview)
+
+https://github.com/user-attachments/assets/cbd1c9e2-6309-4f3c-a02b-f8a03fb92707
+
+
+---
+
+## 📋 Table of Contents
+
+1. [Features](#features)
 2. [Prerequisites](#prerequisites)
-3. [Environment Configuration](#environment-configuration)
+3. [Environment Setup](#environment-setup)
 4. [Backend](#backend)
 
-   * [Setup](#setup)
-   * [Running Locally](#running-locally)
+   * [Install & Run](#install--run)
 5. [Frontend](#frontend)
 
-   * [Setup](#setup-1)
-   * [Running Locally](#running-locally-1)
+   * [Install & Run](#install--run-1)
 6. [API Reference](#api-reference)
-7. [Testing & Validation](#testing--validation)
+7. [Testing](#testing)
 8. [Code Quality](#code-quality)
-9. [Extensibility & Monitoring](#extensibility--monitoring)
+9. [Extensibility](#extensibility)
 10. [License](#license)
 
 ---
 
-## Architecture Overview
+## ✨ Features
 
-```mermaid
-flowchart LR
-  A[React UI] -->|POST JSON| B[FastAPI API]
-  B --> C[SQLite DB]
-  style B fill:#0a2a66,stroke:#333,stroke-width:2px
-```
+* **FastAPI** backend with three endpoints:
 
-* **React UI**: flip‑card interface, sends `x-api-key` in headers.
-* **FastAPI**: validates input, persists to SQLite, returns results.
-
----
-
-## Prerequisites
-
-* **Python 3.8+**
-* **Node.js 14+** & **npm**
+  * `POST /pow` → calculates xⁿ
+  * `POST /fibonacci/{n}` → nth Fibonacci number
+  * `POST /factorial/{n}` → n!
+* **SQLite** for request logging
+* **Pydantic** for data validation
+* **API key** authentication & **CORS** support
+* **React + Vite + TypeScript** front‑end with flip‑card UI
+* Consistent style via **flake8**, **Prettier**, and **ESLint**
 
 ---
 
-## Environment Configuration
+## 🔧 Prerequisites
 
-Copy and customize the following `.env` files, then add them to `.gitignore`.
+* Python 3.8+
+* Node.js 14+ and npm
 
-### `backend/.env`
+---
+
+## ⚙️ Environment Setup
+
+Create `.env` files in each folder and add them to `.gitignore`.
+
+**backend/.env**
 
 ```dotenv
 DATABASE_URL=sqlite:///./requests.db
@@ -71,7 +65,7 @@ API_KEY=supersecretkey
 FRONTEND_ORIGIN=http://localhost:3000
 ```
 
-### `frontend/.env`
+**frontend/.env**
 
 ```dotenv
 VITE_API_URL=http://localhost:8000
@@ -79,145 +73,102 @@ VITE_API_URL=http://localhost:8000
 
 ---
 
-## GitHub Setup
+## 🖥️ Backend
 
-Push this project to GitHub in a few easy steps:
-
-1. **Create a GitHub repository**
-
-   * Go to GitHub.com → New repository → choose a name (e.g. `calculator-microservice-ui`).
-
-2. **Initialize and commit locally**
-
-   ```bash
-   cd <project-root>
-   git init
-   echo ".venv/
-   ```
-
-.env
-requests.db
-node\_modules/" > .gitignore
-git add .
-git commit -m "Initial commit: backend + frontend"
-
-````
-
-3. **Add the remote and push**
-```bash
-git remote add origin <YOUR_GITHUB_URL>
-git branch -M main
-git push -u origin main
-````
-
-4. **Verify** your code is live on GitHub.
-
----
-
-## Backend
-
-### Setup
+### Install & Run
 
 ```bash
 cd backend
-python3 -m venv .venv
-source .venv/bin/activate       # Windows: .venv\Scripts\Activate.ps1
+python -m venv .venv
+# macOS/Linux
+source .venv/bin/activate
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+
 pip install --upgrade pip
 pip install -r requirements.txt
-```
 
-### Running Locally
-
-```bash
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-* API available at `http://localhost:8000`
-* Interactive docs at `http://localhost:8000/docs`
+* API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
-## Frontend
+## 🎨 Frontend
 
-### Setup
+### Install & Run
 
 ```bash
 cd frontend
 npm install
-```
-
-### Running Locally
-
-```bash
 npm run dev
 ```
 
-* UI served at `http://localhost:3000`
+* UI: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## API Reference
+## 📖 API Reference
 
-Include header `x-api-key: supersecretkey` on all requests.
+> All requests require header `x-api-key: supersecretkey`.
 
-### Power
+### 1. Power
 
-```
+```http
 POST /pow
 Content-Type: application/json
-Body: { "x": number, "y": number }
+
+{ "x": number, "y": number }
 ```
 
-**Response:** `{ "operation": "pow", "result": number }`
+**Response:** `{ "operation":"pow","result":number }`
 
-### Fibonacci
+### 2. Fibonacci
 
-```
+```http
 POST /fibonacci/{n}
-Path param: n (integer ≥0)
 ```
 
-**Response:** `{ "operation": "fibonacci", "result": number }`
+**Response:** `{ "operation":"fibonacci","result":number }`
 
-### Factorial
+### 3. Factorial
 
-```
+```http
 POST /factorial/{n}
-Path param: n (integer ≥0)
 ```
 
-**Response:** `{ "operation": "factorial", "result": number }`
+**Response:** `{ "operation":"factorial","result":number }`
 
 ---
 
-## Testing & Validation
+## 🧪 Testing
 
-* Use `curl`, Postman, or the Swagger UI at `/docs`.
-* Example:
+Use Swagger UI or curl:
 
-  ```bash
-  curl -X POST http://localhost:8000/pow \
-       -H 'Content-Type: application/json' \
-       -H 'x-api-key: supersecretkey' \
-       -d '{"x":2,"y":3}'
-  ```
-
----
-
-## Code Quality
-
-* **Backend**: lint with `flake8` (max-line-length=88).
-* **Frontend**: format with Prettier and lint with ESLint.
+```bash
+curl -X POST http://localhost:8000/pow \
+  -H 'Content-Type: application/json' \
+  -H 'x-api-key: supersecretkey' \
+  -d '{"x":2,"y":3}'
+```
 
 ---
 
-## Extensibility & Monitoring
+## ✅ Code Quality
 
-* Add Prometheus/Grafana for metrics.
-* Integrate Redis for caching heavy requests.
-* Hook into Kafka for streaming logs.
+* **Backend**: `flake8` (max‑length=88)
+* **Frontend**: `Prettier` + `ESLint`
 
 ---
 
+## 🚀 Extensibility
+
+* Add caching (Redis) or message streaming (Kafka)
+* Integrate metrics (Prometheus/Grafana)
+* Swap SQLite for Postgres or another DB
+
+---
 
 *Happy coding!* 🚀
+
